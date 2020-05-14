@@ -1,0 +1,91 @@
+#!/bin/bash
+
+export HDF5_DISABLE_VERSION_CHECK=2
+
+octave<<EOF
+
+fid = fopen('aniso_st_intrp.txt','r');
+A = textscan(fid,'%f %f %f');
+fclose(fid);
+
+cpt_rng = linspace(min(A{3}),max(A{3}),5);
+
+fid = fopen('cptrng_b12.txt','w');
+fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(5),(cpt_rng(2)-cpt_rng(1)));
+fclose(fid);
+
+EOF
+
+####### Add path of GSHHG database to the variable GDIR here, after downloading and extracting
+GDIR="/home/user/GSHHG/gshhg-gmt-2.3.7"
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 16p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 16p,Helvetica-Bold,black
+
+gmt set MAP_FRAME_TYPE = fancy
+
+REGION="20/29.7/34.5/38.55"
+SCALE=1.1i
+GRID="SAegean_grd24.nc"
+PS1=aniso_map.ps
+
+wkdir="/home/user/env_EGEL"
+
+awk '{ print $1,$2,$3}' aniso_st_intrp.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I5m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -G${GRID} -T1.0 -V
+
+CPT="jet" 
+
+km_algn="BR"
+km_pos="3.75/3.00"
+
+fr_km_sz="16p"
+
+cpt_algn="BL"
+cpt_pos="3.00i/0.70i"
+cpt_off="0.1i/0.3i"
+
+prm_algn="BL"
+prm_pos="4.10/4.0"
+
+rm -f $PS1
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:WeSn -n+c -V -K -Q -Y1.0 -X2.0 >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg28.5/35.0+c35+w100+ar+f -V -O -K >> $PS1
+# gmt pslegend -DjTR+w0.4i/0.4i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+# EOF
+#echo "(a)" | gmt pstext -R -J -DJ0.3/0.3 -F+cTR+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "Freq = 1-2 Hz" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+echo "dt (in s)" | gmt pstext -R -J -DJ${prm_pos} -F+c${prm_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+read R1 R2 R3 < cptrng_b12.txt
+
+gmt makecpt -C${CPT} -T${R1}/${R2}/${R3} -Z > custom.cpt
+
+gmt set FONT_ANNOT_PRIMARY = 14p,Helvetica-Bold,black
+
+gmt pslegend -Dj${cpt_algn}+w${cpt_pos}+o${cpt_off} -J -R -O -V << EOF >> $PS1
+
+B custom.cpt 0.2i 0.2i
+
+EOF
+
+evince $PS1
+
+gmt psconvert $PS1 -A+m3c/3c/3c/3c -E600 -Tf

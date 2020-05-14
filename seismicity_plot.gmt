@@ -1,0 +1,81 @@
+#!/bin/bash
+
+export HDF5_DISABLE_VERSION_CHECK=2
+
+gmt gmtset MAP_FRAME_PEN 3
+gmt gmtset MAP_FRAME_WIDTH 0.1
+gmt gmtset MAP_FRAME_TYPE plain
+gmt gmtset PS_PAGE_ORIENTATION Portrait
+gmt gmtset PS_MEDIA=A4
+#gmt gmtset FORMAT_GEO_MAP ddd.mmF
+
+PS1=seismicity_final.ps
+REGION="20/29.5/34.5/38.55"
+SCALE=0.7i
+GRID="/home/user/Downloads/ETOPO1_Bed_g_gmt4.grd/data"
+INT="./topo.int"
+CPT="custom.cpt"
+
+
+rm -f test.txt
+
+gmt makecpt -Cgray -T-8000/0/100 -Z > $CPT
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set MAP_FRAME_TYPE = fancy
+
+gmt set FONT_ANNOT_PRIMARY = 14p,Helvetica-Bold,black
+
+gmt set FONT_LABEL = 14p,Helvetica-Bold,black
+
+rm -f $PS1
+
+gmt grdimage $GRID -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:WeSn -V -K -Y10.0 -X2.0 > $PS1
+
+echo "Km" | gmt pstext -R -J -DJ2.75/6.25 -F+cBR+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+gmt makecpt -Chaxby -T0/41/0.2 -Z > seis2.cpt
+
+gmt psxy seismicity_final.txt -R -J -O -K  -W.1 -Sc.2 -Cseis2.cpt -h15 >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -W.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=/home/user/GSHHG/gshhg-gmt-2.3.7 -Dh -Lg28.6/35.0+c35.0+w100+ar+f -V -O -K >> $PS1
+
+gmt psscale -R -J -DjLB+w1.1i/0.10i+o1.70/0.35 -F+g250/250/250 -B10 -By+l"Depth(km)" -Cseis2.cpt -O -V -K >> $PS1
+
+echo "Km" | gmt pstext -R -J -DJ1.50/2.00 -F+cBR+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "(b)" | gmt pstext -R -J -DJ0.12/0.14 -Ggray -F+cTR+f16p,Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+
+gmt grdimage $GRID -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:WeSn -O -V -K -Y10.4 -X0.0 >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -W.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=/home/user/GSHHG/gshhg-gmt-2.3.7 -Dh -Lg28.6/35.0+c35.0+w100+ar+f -V -O -K >> $PS1
+
+awk '{print $3,$2 }' stlist_husn.txt > stlist.xy
+gmt psxy stlist.xy -R -J -O -K -W0.5p,black -Sd.4 -G0/128/129 >> $PS1
+
+awk '{print $3,$2 }' stlist_egel.txt > stlist.xy
+gmt psxy stlist.xy -R -J -O -K -W0.5p,black -St.4 -G178/34/34 >> $PS1
+
+awk '{print $3,$2 }' stlist_cycnt.txt > stlist.xy
+gmt psxy stlist.xy -R -J -O -K -W0.5p,black -Ss.4 -G128/128/0 >> $PS1
+
+gmt pslegend -DjLB+w2.20i/1.1i -F+g250/250/250 -J -R -O -V -K << EOF >> $PS1
+H 14,Helvetica-Bold Legend
+S 0.1i d 0.40 0/128/129 0.5p,black 0.22i HUSN stations
+G 0.03i
+S 0.1i t 0.40 178/34/34 0.5p,black 0.22i EGELADOS stations
+G 0.03i
+S 0.1i s 0.40 128/128/0 0.5p,black 0.22i Cycnet stations
+EOF
+
+gmt pstext 1_st_plot.txt -R -J -F+f14p,Helvetica-Bold,black -O -K -V >> $PS1
+
+echo "(a)" | gmt pstext -R -J -DJ0.12/0.14 -Ggray -F+cTR+f16p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ1.50/2.00 -F+cBR+f14p,Helvetica-Bold,black -O -V >> $PS1
+
+gmt psconvert $PS1 -A+m3c/3c/3c/3c -Tf
+
+evince $PS1

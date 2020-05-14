@@ -1,0 +1,164 @@
+#!/bin/bash
+
+export HDF5_DISABLE_VERSION_CHECK=2
+
+rm -f ~/env_EGEL/Qc24_final.txt
+rm -f ~/env_EGEL/Qc48_final.txt
+rm -f ~/env_EGEL/Qc816_final.txt
+
+for i in ~/env_EGEL/station_files/*
+do
+echo ${i:34:4}
+lonlat=`grep "^${i:34:4} " ~/env_EGEL/stlist_f.txt | awk '{ print $3,$2 }'`
+echo $lonlat
+cd $i
+Qc24=`tail -n1 param_coda_2-4.txt | awk '{ print $1 }'`
+#Qc24=$(perl -e 'printf "%e", ${Qc24}')
+Qc48=`tail -n1 param_coda_4-8.txt | awk '{ print $1 }'`
+#Qc48=$(perl -e 'printf "%e", ${Qc48}')
+Qc816=`tail -n1 param_coda_8-16.txt | awk '{ print $1 }'`
+#Qc816=$(perl -e 'printf "%e", ${Qc816}')
+if [[ "${#Qc24}" -gt 0 ]]; then
+echo $lonlat ${Qc24} >> ~/env_EGEL/Qc24_final.txt
+fi
+if [[ "${#Qc48}" -gt 0 ]]; then
+echo $lonlat ${Qc48} >> ~/env_EGEL/Qc48_final.txt
+fi
+if [[ "${#Qc816}" -gt 0 ]]; then
+echo $lonlat ${Qc816} >> ~/env_EGEL/Qc816_final.txt
+fi
+cd ..
+done
+
+cd ..
+##################################################################################
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica,black
+
+gmt set MAP_FRAME_TYPE = fancy
+
+PS1=coda_Q_25.ps
+REGION="20/29.5/34.5/39.5"
+SCALE=0.48i
+GRID="SAegean_grd24.nc"
+CPT="Qc24.cpt"
+
+#gmt blockmean Qc24_final.txt -R$REGION -I0.04=/0.04= > bloc_grd.xyg
+gmt surface Qc24_intrp.txt -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T1.0 -V 
+gmt grdmask Qc24_intrp.txt -R$REGION -I0.01=/0.01= -N1/1/NaN -Gnew24.nc -S0.25 -V
+
+#gmt xyz2grd Qc24_intrp.txt -GSAegean_grd24.nc -I0.01=/0.01= -R$REGION -V
+
+#gmt makecpt -C144/55/109,118/52/158,86/60/149,27/30/123,29/60/143,72/147/228,125/192/235,96/159/24,158/194/6,252/244/0,238/190/1,191/123/60,180/48/89,207/0/0 -T9.723,10.6895,11.656,12.6225,13.589,14.5555,15.522,16.4885,17.455,18.4215,19.388,20.3545,21.321,22.2875,23.254 > $CPT
+#gmt makecpt -Crainbow -T8/20/0.03 -Z > $CPT
+
+rm -f $PS1
+
+#gmt grdmath $GRID new24.nc OR = output24.grd
+
+gmt grdimage $GRID -Inew24.nc -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:WesN -n+c -V -K -Q -Y11.5 -X1.0 >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=/home/user/GSHHG/gshhg-gmt-2.3.7 -Lg28.5/35+c37+w100+ar+f -V -O -K >> $PS1
+gmt pslegend -DjTR+w0.4i/0.4i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+
+echo "(a)" | gmt pstext -R -J -DJ0.3/0.3 -F+cTR+f14p,Helvetica,black -O -V -K >> $PS1
+
+echo "Freq = 2-4 Hz" | gmt pstext -R -J -DJ0.5/0.5 -F+cBL+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ1.25/1.35 -F+cBR+f12p,Helvetica,black -O -V -K >> $PS1
+
+gmt makecpt -CQc24.cpt -T0/1.4/0.46 -Z > custom.cpt
+
+gmt set FONT_ANNOT_PRIMARY = 9p,Helvetica-Bold,black
+
+gmt pslegend -DjBL+w1.3i/0.6i+o0.1i/0.3i -J -R -O -V -K << EOF >> $PS1
+
+B custom.cpt 0.1i 0.1i
+
+EOF
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica,black
+
+gmt set MAP_FRAME_TYPE = fancy
+
+CPT="Qc48.cpt"
+
+#gmt blockmean Qc48_final.txt -R$REGION -I0.04=/0.04= > bloc_grd.xyg
+gmt surface Qc48_intrp.txt -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T1.0 -V 
+gmt grdmask Qc48_intrp.txt -R$REGION -I0.01=/0.01= -N1/1/NaN -Gnew24.nc -S0.25 -V
+
+#gmt grdmath $GRID new24.nc OR = output24.grd
+
+gmt grdimage $GRID -Inew24.nc -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:wEsN -n+c -O -V -K -Q -Y0.0 -X13.3 >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=/home/user/GSHHG/gshhg-gmt-2.3.7 -Lg28.5/35+c37+w100+ar+f -V -O -K >> $PS1
+gmt pslegend -DjTR+w0.4i/0.4i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(b)" | gmt pstext -R -J -DJ0.3/0.3 -F+cTR+f14p,Helvetica,black -O -V -K >> $PS1
+
+echo "Freq = 4-8 Hz" | gmt pstext -R -J -DJ0.5/0.5 -F+cBL+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ1.25/1.35 -F+cBR+f12p,Helvetica,black -O -V -K >> $PS1
+
+gmt makecpt -CQc48.cpt -T0/0.84/0.28 -Z > custom.cpt
+
+gmt set FONT_ANNOT_PRIMARY = 9p,Helvetica-Bold,black
+
+gmt pslegend -DjBL+w1.3i/0.6i+o0.1i/0.3i -J -R -O -V -K << EOF >> $PS1
+
+B custom.cpt 0.1i 0.1i
+
+EOF
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica,black
+
+gmt set MAP_FRAME_TYPE = fancy
+
+CPT="Qc816.cpt"
+
+#gmt blockmean Qc816_final.txt -R$REGION -I0.04=/0.04= > bloc_grd.xyg
+gmt surface Qc816_intrp.txt -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T1.0 -V 
+gmt grdmask Qc816_intrp.txt -R$REGION -I0.01=/0.01= -N1/1/NaN -Gnew24.nc -S0.25 -V
+
+#gmt grdmath $GRID new24.nc OR = output24.grd
+
+gmt grdimage $GRID -Inew24.nc -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:WeSn -n+c -O -V -K -Q -Y-10.5 -X-13.3 >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=/home/user/GSHHG/gshhg-gmt-2.3.7 -Lg28.5/35+c37+w100+ar+f -V -O -K >> $PS1
+gmt pslegend -DjTR+w0.4i/0.4i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(c)" | gmt pstext -R -J -DJ0.3/0.3 -F+cTR+f14p,Helvetica,black -O -V -K >> $PS1
+
+echo "Freq = 8-16 Hz" | gmt pstext -R -J -DJ0.5/0.5 -F+cBL+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ1.25/1.35 -F+cBR+f12p,Helvetica,black -O -V -K >> $PS1
+
+gmt makecpt -CQc816.cpt -T0/0.54/0.18 -Z > custom.cpt
+
+gmt set FONT_ANNOT_PRIMARY = 9p,Helvetica-Bold,black
+
+gmt pslegend -DjBL+w1.3i/0.6i+o0.1i/0.3i -J -R -O -V << EOF >> $PS1
+
+B custom.cpt 0.1i 0.1i
+
+EOF
+
+#gmt psscale -DjRB+h+w2.5i/0.2i+o9.2/9.0 -R -J -B0.15 -By+l"@~k@~" -C$CPT -O -V >> $PS1
+
+gmt psconvert $PS1 -A+m3c/3c/3c/3c -E600 -Tg
+gmt psconvert $PS1 -A+m3c/3c/3c/3c -E600 -Tjef
+
+evince $PS1
+

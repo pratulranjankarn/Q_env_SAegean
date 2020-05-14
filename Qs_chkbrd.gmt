@@ -1,0 +1,326 @@
+#!/bin/bash
+
+export HDF5_DISABLE_VERSION_CHECK=2
+
+####### Add path of GSHHG database to the variable GDIR here, after downloading and extracting
+GDIR="/home/user/GSHHG/gshhg-gmt-2.3.7"
+
+######################################################################################
+wkdir="/home/user/env_EGEL"
+testdir="/home/user/env_EGEL/env_chktst_pkdbl_dfwln"
+
+PS1=${testdir}/envg_10_10_1_chkbrd.ps
+
+mkdir ${testdir}
+
+cd ${testdir}
+
+awk '{ if ($5 >=-10 && $4 >= -10) 
+        print $1,$2,$4; }' ${testdir}/bin_chk_orig_bg.txt > ${testdir}/envnodes15g_chkbrd.txt
+
+awk '{ if ($5 >=-10 && $4 >= -10) 
+        print $1,$2,$4; }' ${testdir}/bin_chk_31_46_1_1-2Hz.txt > ${testdir}/envnodes15g_1-2.txt
+
+awk '{ if ($5 >=-10 && $4 >= -10) 
+        print $1,$2,$4; }' ${testdir}/bin_chk_31_46_1_2-4Hz.txt > ${testdir}/envnodes15g_2-4.txt
+
+awk '{ if ($5 >=-10 && $4 >= -10) 
+        print $1,$2,$4; }' ${testdir}/bin_chk_31_46_1_4-8Hz.txt > ${testdir}/envnodes15g_4-8.txt
+
+awk '{ if ($5 >=-10 && $4 >= -10) 
+        print $1,$2,$4; }' ${testdir}/bin_chk_31_46_1_8-16Hz.txt > ${testdir}/envnodes15g_8-16.txt
+
+awk '{ if ($5 >=-10 && $4 >= -10) 
+        print $1,$2,$4; }' ${testdir}/bin_chk_31_46_1_16-32Hz.txt > ${testdir}/envnodes15g_16-32.txt
+
+######################################################################################################
+
+
+# octave<<EOF
+
+# fid = fopen('envnodes15g_chkbrd.txt','r');
+# A = textscan(fid,'%f %f %f');
+# fclose(fid);
+# cpt_rng = linspace(min(A{3}),max(A{3}),4);
+# fid = fopen('cptrng_gchkbrd.txt','w');
+# fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(4),(cpt_rng(2)-cpt_rng(1)));
+# fclose(fid);
+
+
+# fid = fopen('envnodes15g_1-2.txt','r');
+# A = textscan(fid,'%f %f %f');
+# fclose(fid);
+# cpt_rng = linspace(min(A{3}),max(A{3}),4);
+# fid = fopen('cptrng_g12.txt','w');
+# fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(4),(cpt_rng(2)-cpt_rng(1)));
+# fclose(fid);
+
+
+# fid = fopen('envnodes15g_2-4.txt','r');
+# A = textscan(fid,'%f %f %f');
+# fclose(fid);
+# cpt_rng = linspace(min(A{3}),max(A{3}),4);
+# fid = fopen('cptrng_g24.txt','w');
+# fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(4),(cpt_rng(2)-cpt_rng(1)));
+# fclose(fid);
+
+
+# fid = fopen('envnodes15g_4-8.txt','r');
+# A = textscan(fid,'%f %f %f');
+# fclose(fid);
+# cpt_rng = linspace(min(A{3}),max(A{3}),4);
+# fid = fopen('cptrng_g48.txt','w');
+# fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(4),(cpt_rng(2)-cpt_rng(1)));
+# fclose(fid);
+
+
+# fid = fopen('envnodes15g_8-16.txt','r');
+# A = textscan(fid,'%f %f %f');
+# fclose(fid);
+# cpt_rng = linspace(min(A{3}),max(A{3}),4);
+# fid = fopen('cptrng_g816.txt','w');
+# fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(4),(cpt_rng(2)-cpt_rng(1)));
+# fclose(fid);
+
+
+# fid = fopen('envnodes15g_16-32.txt','r');
+# A = textscan(fid,'%f %f %f');
+# fclose(fid);
+# cpt_rng = linspace(min(A{3}),max(A{3}),4);
+# fid = fopen('cptrng_g1632.txt','w');
+# fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(4),(cpt_rng(2)-cpt_rng(1)));
+# fclose(fid);
+
+# EOF
+
+#################################################################################################################
+
+####################################### 1 - 2 Hz #################################################################
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+# Z = [90.0000 70.0000 50.0000 30.0000 10.0000]
+Z="15"
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt set MAP_FRAME_TYPE = fancy
+
+
+REGION="20/29.0/34.5/38.55"
+SCALE=0.38i
+GRID="SAegean_grd24.nc"
+
+X1="1.0"
+Y1="11.5"
+X2="9.8"
+Y2="0.0"
+X3="9.8"
+Y3="0.0"
+X4="-14.7"
+Y4="-8.0"
+X5="9.8"
+Y5="0.0"
+
+scal_pos="28.0/35.0"
+
+freq_algn="BL"
+freq_pos="0.5/0.5"
+
+km_algn="BR"
+km_pos="0.75/1.15"
+
+fr_km_sz="12p"
+
+cpt_algn="BR"
+cpt_pos="2.5i/0.2i"
+cpt_off="6.0/6.5"
+
+gmt makecpt -Cimola -T0.0001/0.1/0.0001 -Z > custom.cpt
+
+awk '{print $2,$1,$3}' ${testdir}/envnodes${Z}g_chkbrd.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I5m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T1.0 -V
+
+CPT="custom.cpt" 
+
+rm -f $PS1
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:WeSN -n+c -V -K -Q -Y${Y1} -X${X1} >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+gmt pslegend -DjTR+w0.3i/0.3i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(a)" | gmt pstext -R -J -DJ0.2/0.2 -F+cTR+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+echo "Checkerboard" | gmt pstext -R -J -DJ0.2/1.2 -F+cBL+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "Model" | gmt pstext -R -J -DJ0.7/0.5 -F+cBL+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt set MAP_FRAME_TYPE = fancy
+
+CPT="custom.cpt" 
+
+
+
+
+awk '{print $2,$1,$3}' ${testdir}/envnodes${Z}g_1-2.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I5m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T1.0 -V 
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:weSN -n+c -O -V -K -Q -Y${Y2} -X${X2} >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+gmt pslegend -DjTR+w0.3i/0.3i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(b)" | gmt pstext -R -J -DJ0.2/0.2 -F+cTR+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+echo "Freq = 1-2 Hz" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt set MAP_FRAME_TYPE = fancy
+
+CPT="custom.cpt" 
+
+
+
+
+awk '{print $2,$1,$3}' ${testdir}/envnodes${Z}g_2-4.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I5m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T1.0 -V 
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:weSN -n+c -O -V -K -Q -Y${Y3} -X${X3} >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+gmt pslegend -DjTR+w0.3i/0.3i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(c)" | gmt pstext -R -J -DJ0.2/0.2 -F+cTR+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+echo "Freq = 2-4 Hz" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt set MAP_FRAME_TYPE = fancy
+
+CPT="custom.cpt" 
+
+
+
+
+awk '{print $2,$1,$3}' ${testdir}/envnodes${Z}g_4-8.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I5m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T1.0 -V 
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:WeSN -n+c -O -V -K -Q -Y${Y4} -X${X4} >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+gmt pslegend -DjTR+w0.3i/0.3i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(d)" | gmt pstext -R -J -DJ0.2/0.2 -Ggray -F+cTR+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+echo "Freq = 4-8 Hz" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt set MAP_FRAME_TYPE = fancy
+
+CPT="custom.cpt" 
+
+
+
+
+awk '{print $2,$1,$3}' ${testdir}/envnodes${Z}g_8-16.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I5m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T1.0 -V 
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -C$CPT -R$REGION -Jm$SCALE -Bf0.5a1/f0.5a1:.:weSN -n+c -O -V -K -Q -Y${Y5} -X${X5} >> $PS1
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+gmt pslegend -DjTR+w0.3i/0.3i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(e)" | gmt pstext -R -J -DJ0.2/0.2 -Ggray -F+cTR+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+echo "Freq = 8-16 Hz" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt psscale -Dj${cpt_algn}+h+w${cpt_pos}+o${cpt_off} -By+l"Q@-sc@-@+-1@+" -J -R -O -V -Ccustom.cpt -B0.02 >> $PS1 
+
+gmt psconvert $PS1 -A+m3c/3c/3c/3c -E600 -Tf
+
+evince $PS1

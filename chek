@@ -1,0 +1,55 @@
+function error_sum = g_func_env(x,v_avg,mnfrq)
+error_sum = 0;
+
+%x(1)
+%x(2)
+    qw = sprintf("out*envwin_%s.txt",mnfrq);
+    aw = dir(qw);
+    temp1 = zeros(length(aw),10000);
+    mw = struct2cell(aw);
+    P1 = zeros(length(aw),10000);
+    
+    l_p = length(aw);
+    
+    R = x(3:l_p+2);
+    
+    W = x(l_p+3);
+    
+    W1 = (prod(R))^1/length(R);
+    
+    if (x(1)>0) && (x(2)>0)
+        for i=1:length(aw)
+            U1_arr = load(mw{(i-1)*6+1});
+            r = U1_arr(end);
+            tcons = r/v_avg;
+    
+            tm = linspace(tcons,100+tcons,10000);
+    
+            fctr = exp(-v_avg*tm*x(1));
+            frstrm = zeros(1,length(tm));
+            [val,qw] = min(tm-r/v_avg,[],2);
+            frstrm(qw) = 1/(4*pi*r^2);
+            scndtrm_p1 = exp(-1.5*(log(4*pi*v_avg)-log(3*x(1))));
+            scndtrm_p2 = tm.^(-1.5);
+            alpha = r./(v_avg.*tm);
+            beta = (1 - alpha.^2);
+            beta(qw) = 0;
+            scndtrm_p3 = (beta).^(1/8);
+            scndtrm_p5 = heaviside(v_avg*tm-r);
+            scndtrm_p4_var = exp(log(v_avg*tm*x(1)) + 0.75*log(beta));
+            scndtrm_p4_var(qw) = 0;
+            scndtrm_p4 = exp(scndtrm_p4_var + 0.5*log(1 + 2.026./scndtrm_p4_var));
+            scndtrm_p4(qw) = 0;
+            temp1(i,:) = fctr .* (frstrm + scndtrm_p1 .* scndtrm_p2 .* scndtrm_p3 .* scndtrm_p4 .* scndtrm_p5).* exp(-x(2)*tm);
+
+            
+            P1(i,:) = log10(temp1(i,:)) + log10(R(i)/W1) + log10(W*W1);
+    
+            U1 = log10(U1_arr(1:end-1));
+            
+            error_sum = error_sum + sum((U1-P1(i,:)).^2);
+        end
+    else
+        error_sum = Inf;
+    end
+end

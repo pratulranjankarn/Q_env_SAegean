@@ -1,0 +1,1422 @@
+#!/bin/bash
+
+export HDF5_DISABLE_VERSION_CHECK=2
+
+####### Add path of GSHHG database to the variable GDIR here, after downloading and extracting
+GDIR="/home/user/GSHHG/gshhg-gmt-2.3.7"
+
+######################################################################################
+
+wkdir="/home/user/env_EGEL"
+
+dir1="/home/user/env_EGEL/env_gauss_7.2,3.6,1.8,.90_11s"
+dir2="/home/user/env_EGEL/env_gauss_7.2,3.6,1.8,.90_10s"
+dir3="/home/user/env_EGEL/env_gauss_7.2,3.6,1.8,.90_9s"
+dir4="/home/user/env_EGEL/env_gauss_7.2,3.6,1.8,.90_8s"
+
+PS1="envg_pkdbl_swintst_nrmlzd_10_10_1.ps"
+
+sgmy="3_3"
+
+octave<<EOF
+abs_pdir = sprintf('%s/envnodes15g_1-2_%s.txt',"${dir1}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+A = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(A{3});
+beta = max(A{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg12_%s.cpt',"${dir1}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_1-2_%s.txt',"${dir2}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+B = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(B{3});
+beta = max(B{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg12_%s.cpt',"${dir2}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_1-2_%s.txt',"${dir3}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+C = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(C{3});
+beta = max(C{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg12_%s.cpt',"${dir3}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_1-2_%s.txt',"${dir4}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+D = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(D{3});
+beta = max(D{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg12_%s.cpt',"${dir4}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+cpt_rng = linspace(0,1,5);
+
+fid = fopen('cptrng_g12.txt','w');
+fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(5),(cpt_rng(2)-cpt_rng(1)));
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_2-4_%s.txt',"${dir1}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+A = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(A{3});
+beta = max(A{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg24_%s.cpt',"${dir1}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_2-4_%s.txt',"${dir2}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+B = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(B{3});
+beta = max(B{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg24_%s.cpt',"${dir2}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_2-4_%s.txt',"${dir3}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+C = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(C{3});
+beta = max(C{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg24_%s.cpt',"${dir3}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_2-4_%s.txt',"${dir4}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+D = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(D{3});
+beta = max(D{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg24_%s.cpt',"${dir4}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+cpt_rng = linspace(0,1,5);
+
+fid = fopen('cptrng_g24.txt','w');
+fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(5),(cpt_rng(2)-cpt_rng(1)));
+fclose(fid);
+
+
+abs_pdir = sprintf('%s/envnodes15g_4-8_%s.txt',"${dir1}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+A = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(A{3});
+beta = max(A{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg48_%s.cpt',"${dir1}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_4-8_%s.txt',"${dir2}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+B = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(B{3});
+beta = max(B{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg48_%s.cpt',"${dir2}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+
+abs_pdir = sprintf('%s/envnodes15g_4-8_%s.txt',"${dir3}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+C = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(C{3});
+beta = max(C{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg48_%s.cpt',"${dir3}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_4-8_%s.txt',"${dir4}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+D = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(D{3});
+beta = max(D{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg48_%s.cpt',"${dir4}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+cpt_rng = linspace(0,1,5);
+
+fid = fopen('cptrng_g48.txt','w');
+fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(5),(cpt_rng(2)-cpt_rng(1)));
+fclose(fid);
+
+
+abs_pdir = sprintf('%s/envnodes15g_8-16_%s.txt',"${dir1}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+A = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(A{3});
+beta = max(A{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg816_%s.cpt',"${dir1}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_8-16_%s.txt',"${dir2}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+B = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(B{3});
+beta = max(B{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg816_%s.cpt',"${dir2}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_8-16_%s.txt',"${dir3}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+C = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(C{3});
+beta = max(C{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg816_%s.cpt',"${dir3}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+abs_pdir = sprintf('%s/envnodes15g_8-16_%s.txt',"${dir4}","${sgmy}")
+fid = fopen(abs_pdir,'r');
+D = textscan(fid,'%f %f %f');
+fclose(fid);
+
+alpha = min(D{3});
+beta = max(D{3});
+cpt_rng = linspace(alpha,beta,14);
+
+abs_pdir = sprintf('%s/envg816_%s.cpt',"${dir4}","${sgmy}")
+fid = fopen(abs_pdir,'w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+cpt_rng = linspace(alpha,beta,4);
+
+fid = fopen('cptrng_g816.txt','w');
+fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(4),(cpt_rng(2)-cpt_rng(1)));
+fclose(fid);
+
+fid = fopen('envnodes15g_16-32.txt','r');
+A = textscan(fid,'%f %f %f');
+fclose(fid);
+cpt_rng = linspace(min(A{3}),max(A{3}),14);
+fid = fopen('envg1632.cpt','w');
+fprintf(fid,'# COLOR_MODEL = RGB\n');
+fprintf(fid,'%f 144 55 109  %.3f 118 52 158\n',cpt_rng(1),cpt_rng(2));
+fprintf(fid,'%.3f 118 52 158  %.3f 86 60 149\n',cpt_rng(2),cpt_rng(3));
+fprintf(fid,'%.3f 86 60 149  %.3f 27 30 123\n',cpt_rng(3),cpt_rng(4));
+fprintf(fid,'%.3f 27 30 123  %.3f 29 60 143\n',cpt_rng(4),cpt_rng(5));
+fprintf(fid,'%.3f 29 60 143  %.3f 72 147 228\n',cpt_rng(5),cpt_rng(6));
+fprintf(fid,'%.3f 72 147 228  %.3f 125 192 235\n',cpt_rng(6),cpt_rng(7));
+fprintf(fid,'%.3f 125 192 235  %.3f 96 159 24\n',cpt_rng(7),cpt_rng(8));
+fprintf(fid,'%.3f 96 159 24  %.3f 158 194 6\n',cpt_rng(8),cpt_rng(9));
+fprintf(fid,'%.3f 158 194 6  %.3f 252 244 0\n',cpt_rng(9),cpt_rng(10));
+fprintf(fid,'%.3f 252 244 0  %.3f 238 190 1\n',cpt_rng(10),cpt_rng(11));
+fprintf(fid,'%.3f 238 190 1  %.3f 191 123 60\n',cpt_rng(11),cpt_rng(12));
+fprintf(fid,'%.3f 191 123 60  %.3f 180 48 89\n',cpt_rng(12),cpt_rng(13));
+fprintf(fid,'%.3f 180 48 89  %f 207 0 0\n',cpt_rng(13),cpt_rng(14));
+fprintf(fid,'B 255 255 255\n');
+fprintf(fid,'F 255 255 255\n');
+fprintf(fid,'N 255   0   0\n');
+fclose(fid);
+
+cpt_rng = linspace(min(A{3}),max(A{3}),4);
+
+fid = fopen('cptrng_g1632.txt','w');
+fprintf(fid,'%.2f %.2f %.2f',cpt_rng(1),cpt_rng(4),(cpt_rng(2)-cpt_rng(1)));
+fclose(fid);
+
+EOF
+
+#mkdir ${testdir}
+
+####################################### 1 - 2 Hz #################################################################
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+# Z = [90.0000 70.0000 50.0000 30.0000 10.0000]
+Z="15"
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt set MAP_FRAME_TYPE = plain
+
+
+REGION="20/29.7/34.5/38.55"
+SCALE=0.23i
+GRID="SAegean_grd24.nc"
+
+X1="3.5c"
+Y1="15.0c"
+X2="6.5c"
+Y2="0.0"
+X3="6.5c"
+Y3="0.0c"
+X4="6.5c"
+Y4="0.0c"
+X5="-19.5c"
+Y5="-3.7c"
+X6="6.5c"
+Y6="0.0"
+X7="6.5c"
+Y7="0.0c"
+X8="6.5c"
+Y8="0.0c"
+X9="-19.5c"
+Y9="-3.7c"
+X10="6.5c"
+Y10="0.0"
+X11="6.5c"
+Y11="0.0c"
+X12="6.5c"
+Y12="0.0c"
+X13="-19.5c"
+Y13="-3.7c"
+X14="6.5c"
+Y14="0.0"
+X15="6.5c"
+Y15="0.0c"
+X16="6.5c"
+Y16="0.0c"
+
+scal_pos="28.5/35.3"
+
+freq_algn="BL"
+freq_pos="0.25/0.25"
+
+km_algn="BR"
+km_pos="0.60/1.00"
+
+prm_algn="BR"
+prm_pos="1.0/1.75"
+
+fr_km_sz="10p"
+
+
+cpt_algn="BR"
+cpt_pos="1.60i/0.15i"
+cpt_off="0.1i/0.3i"
+
+
+awk '{print $2,$1,$3}' ${dir1}/envnodes${Z}g_1-2_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V
+
+CPT="${dir1}/envg12_${sgmy}.cpt" 
+
+cat $CPT > test.cpt
+
+rm -f $PS1
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:WesN -n+c -V -K -Q -Y${Y1} -X${X1} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(a)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "8 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# echo "log@-10@-(Q@-sc@-@+-1@+)" | gmt pstext -R -J -DJ${prm_pos} -F+c${prm_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# read R1 R2 R3 < cptrng_g12.txt
+
+# gmt makecpt -Cenvg12.cpt -T${R1}/${R2}/${R3} -Z > custom.cpt
+
+# gmt set FONT_ANNOT_PRIMARY = 9p,Helvetica-Bold,black
+
+# gmt pslegend -Dj${cpt_algn}+w${cpt_pos}+o${cpt_off} -J -R -O -V -K << EOF >> $PS1
+
+# B custom.cpt 0.1i 0.1i
+
+# EOF
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+CPT="${dir1}/envg24_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir1}/envnodes${Z}g_2-4_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:wesN -n+c -O -V -K -Q -Y${Y2} -X${X2} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(b)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "4 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# echo "log@-10@-(Q@-sc@-@+-1@+)" | gmt pstext -R -J -DJ${prm_pos} -F+c${prm_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# read R1 R2 R3 < cptrng_g24.txt
+
+# gmt makecpt -Cenvg24.cpt -T${R1}/${R2}/${R3} -Z > custom.cpt
+
+# gmt set FONT_ANNOT_PRIMARY = 9p,Helvetica-Bold,black
+
+# gmt pslegend -Dj${cpt_algn}+w${cpt_pos}+o${cpt_off} -J -R -O -V -K << EOF >> $PS1
+
+# B custom.cpt 0.1i 0.1i
+
+# EOF
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+
+CPT="${dir1}/envg48_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir1}/envnodes${Z}g_4-8_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:wesN -n+c -O -V -K -Q -Y${Y3} -X${X3} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(c)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "2 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# echo "log@-10@-(Q@-sc@-@+-1@+)" | gmt pstext -R -J -DJ${prm_pos} -F+c${prm_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# read R1 R2 R3 < cptrng_g48.txt
+
+# gmt makecpt -Cenvg48.cpt -T${R1}/${R2}/${R3} -Z > custom.cpt
+
+# gmt set FONT_ANNOT_PRIMARY = 9p,Helvetica-Bold,black
+
+# gmt pslegend -Dj${cpt_algn}+w${cpt_pos}+o${cpt_off} -J -R -O -V -K << EOF >> $PS1
+
+# B custom.cpt 0.1i 0.1i
+
+# EOF
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+
+CPT="${dir1}/envg816_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir1}/envnodes${Z}g_8-16_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:wEsN -n+c -O -V -K -Q -Y${Y4} -X${X4} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(d)" | gmt pstext -R -J -DJ0.10/0.15 -Ggray -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "1 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+
+awk '{print $2,$1,$3}' ${dir2}/envnodes${Z}g_1-2_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V
+
+CPT="${dir2}/envg12_${sgmy}.cpt" 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:Wesn -n+c -O -V -K -Q -Y${Y5} -X${X5} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(e)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "7.2 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# echo "log@-10@-(Q@-sc@-@+-1@+)" | gmt pstext -R -J -DJ${prm_pos} -F+c${prm_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# read R1 R2 R3 < cptrng_g12.txt
+
+# gmt makecpt -Cenvg12.cpt -T${R1}/${R2}/${R3} -Z > custom.cpt
+
+# gmt set FONT_ANNOT_PRIMARY = 9p,Helvetica-Bold,black
+
+# gmt pslegend -Dj${cpt_algn}+w${cpt_pos}+o${cpt_off} -J -R -O -V -K << EOF >> $PS1
+
+# B custom.cpt 0.1i 0.1i
+
+# EOF
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+CPT="${dir2}/envg24_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir2}/envnodes${Z}g_2-4_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:wesn -n+c -O -V -K -Q -Y${Y6} -X${X6} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(f)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "3.6 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# echo "log@-10@-(Q@-sc@-@+-1@+)" | gmt pstext -R -J -DJ${prm_pos} -F+c${prm_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# read R1 R2 R3 < cptrng_g24.txt
+
+# gmt makecpt -Cenvg24.cpt -T${R1}/${R2}/${R3} -Z > custom.cpt
+
+# gmt set FONT_ANNOT_PRIMARY = 9p,Helvetica-Bold,black
+
+# gmt pslegend -Dj${cpt_algn}+w${cpt_pos}+o${cpt_off} -J -R -O -V -K << EOF >> $PS1
+
+# B custom.cpt 0.1i 0.1i
+
+# EOF
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+
+CPT="${dir2}/envg48_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir2}/envnodes${Z}g_4-8_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:wesn -n+c -O -V -K -Q -Y${Y7} -X${X7} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(g)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "1.8 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# echo "log@-10@-(Q@-sc@-@+-1@+)" | gmt pstext -R -J -DJ${prm_pos} -F+c${prm_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+# read R1 R2 R3 < cptrng_g48.txt
+
+# gmt makecpt -Cenvg48.cpt -T${R1}/${R2}/${R3} -Z > custom.cpt
+
+# gmt set FONT_ANNOT_PRIMARY = 9p,Helvetica-Bold,black
+
+# gmt pslegend -Dj${cpt_algn}+w${cpt_pos}+o${cpt_off} -J -R -O -V -K << EOF >> $PS1
+
+# B custom.cpt 0.1i 0.1i
+
+# EOF
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+
+CPT="${dir2}/envg816_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir2}/envnodes${Z}g_8-16_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:wEsn -n+c -O -V -K -Q -Y${Y8} -X${X8} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(h)" | gmt pstext -R -J -DJ0.10/0.15 -Ggray -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "0.90 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+awk '{print $2,$1,$3}' ${dir3}/envnodes${Z}g_1-2_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V
+
+CPT="${dir3}/envg12_${sgmy}.cpt" 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:Wesn -n+c -O -V -K -Q -Y${Y9} -X${X9} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(i)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "6 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+CPT="${dir3}/envg24_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir3}/envnodes${Z}g_2-4_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:wesn -n+c -O -V -K -Q -Y${Y10} -X${X10} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(j)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "3 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+
+CPT="${dir3}/envg48_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir3}/envnodes${Z}g_4-8_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:wesn -n+c -O -V -K -Q -Y${Y11} -X${X11} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(k)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "1.5 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+
+CPT="${dir3}/envg816_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir3}/envnodes${Z}g_8-16_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:wEsn -n+c -O -V -K -Q -Y${Y12} -X${X12} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(l)" | gmt pstext -R -J -DJ0.10/0.15 -Ggray -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "0.75 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+awk '{print $2,$1,$3}' ${dir4}/envnodes${Z}g_1-2_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V
+
+CPT="${dir4}/envg12_${sgmy}.cpt" 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:WeSn -n+c -O -V -K -Q -Y${Y13} -X${X13} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(m)" | gmt pstext -R -J -DJ0.15/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "5 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+CPT="${dir4}/envg24_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir4}/envnodes${Z}g_2-4_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:weSn -n+c -O -V -K -Q -Y${Y14} -X${X14} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(n)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "2.5 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+
+CPT="${dir4}/envg48_${sgmy}.cpt"  
+
+awk '{print $2,$1,$3}' ${dir4}/envnodes${Z}g_4-8_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:weSn -n+c -O -V -K -Q -Y${Y15} -X${X15} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(o)" | gmt pstext -R -J -DJ0.10/0.15 -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "1.25 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+
+
+
+rm -f new24.nc SAegean_grd24.nc output24.grd
+
+gmt set MAP_FRAME_PEN = thickest,black
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+
+
+
+CPT="${dir4}/envg816_${sgmy}.cpt" 
+
+awk '{print $2,$1,$3}' ${dir4}/envnodes${Z}g_8-16_${sgmy}.txt > test.txt
+
+gmt blockmean test.txt -R$REGION -I20m > test.xyg
+#gmt grdmask test.xyg -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew24.nc -S7.500k -V
+gmt grdmask ${wkdir}/SAegean_poly_coord.txt -R$REGION -I0.01=/0.01= -NNaN/1/1 -Gnew.nc -V
+gmt surface test.xyg -R$REGION -I0.01=/0.01= -GSAegean_grd24.nc -T0.25 -V 
+
+cat $CPT > test.cpt
+
+#gmt grdmath $GRID new24.nc OR = temp.grd
+
+gmt grdmath $GRID new.nc OR = output24.grd
+
+gmt grdimage output24.grd -Ctest.cpt -R$REGION -Jm$SCALE -Bf1a2/f0.5a1:.:wESn -n+c -Q -O -V -K -Y${Y16} -X${X16} >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 10p,Helvetica-Bold,black
+
+gmt pscoast -Jm$SCALE -R$REGION -Dh -W0.3p,0/0/0 -N2p,0/0/0 --DIR_GSHHG=${GDIR} -Lg${scal_pos}+c37+w100+ar+f -V -O -K >> $PS1
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+gmt pslegend -DjTR+w0.25i/0.25i -F+ggray -J -R -O -V -K << EOF >> $PS1
+
+EOF
+echo "(p)" | gmt pstext -R -J -DJ0.10/0.15 -Ggray -F+cTR+f12p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "0.625 s" | gmt pstext -R -J -DJ${freq_pos} -F+c${freq_algn}+f${fr_sz},Helvetica-Bold,red -O -V -K >> $PS1
+echo "Km" | gmt pstext -R -J -DJ${km_pos} -F+c${km_algn}+f${fr_km_sz},Helvetica-Bold,black -O -V -K >> $PS1
+
+gmt set FONT_LABEL = 12p,Helvetica-Bold,black
+
+gmt set FONT_ANNOT_PRIMARY = 12p,Helvetica-Bold,black
+
+read R1 R2 R3 < cptrng_g12.txt
+gmt makecpt -Cenvg12.cpt -T0/1/0.05 -Z > custom.cpt
+
+#gmt psscale -DjRB+h+w2.0i/0.2i+o21.7c/-1.7 -R -J -Ccustom.cpt -O -V -K >> $PS1
+
+read R1 R2 R3 < cptrng_g24.txt
+gmt makecpt -Cenvg24.cpt -T0/1/0.05 -Z > custom.cpt
+
+#gmt psscale -DjRB+h+w2.0i/0.2i+o14.7c/-1.7 -R -J -Ccustom.cpt -O -V -K >> $PS1
+
+read R1 R2 R3 < cptrng_g48.txt
+gmt makecpt -Cenvg48.cpt -T0/1/0.25 -Z > custom.cpt
+
+#gmt psscale -DjRB+h+w2.0i/0.2i+o7.7c/-1.7 -R -J -Ccustom.cpt -O -V -K >> $PS1
+
+read R1 R2 R3 < cptrng_g816.txt
+gmt makecpt -Cenvg816.cpt -T0/1/0.25 -Z > custom.cpt
+
+gmt psscale -DjRB+h+w3.0i/0.2i+o8.7c/-1.7 -R -J -Ccustom.cpt -O -V -K >> $PS1
+
+#echo "x@-min@-/3" | gmt pstext -R -J -DJ37.6c/1.3 -N -F+cRB+f14p,Helvetica-BoldOblique,black -O -V -K >> $PS1
+echo "S@-win@- = 8s" | gmt pstext -R -J -DJ37.6c/2.3 -N -F+cRB+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "x@-min@-/2" | gmt pstext -R -J -DJ37.6c/6.5 -N -F+cRB+f14p,Helvetica-BoldOblique,black -O -V -K >> $PS1
+echo "S@-win@- = 9s" | gmt pstext -R -J -DJ37.6c/7.5 -N -F+cRB+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "x@-min@-" | gmt pstext -R -J -DJ38.0c/11.7 -N -F+cRB+f14p,Helvetica-BoldOblique,black -O -V -K >> $PS1
+echo "S@-win@- = 10s" | gmt pstext -R -J -DJ37.3c/12.7 -N -F+cRB+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+#echo "x@-min@-" | gmt pstext -R -J -DJ38.0c/17.0 -N -F+cRB+f14p,Helvetica-BoldOblique,black -O -V -K >> $PS1
+echo "S@-win@- = 11s" | gmt pstext -R -J -DJ37.3c/18.0 -N -F+cRB+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+echo "1-2 Hz" | gmt pstext -R -J -DJ30.6c/21.5 -N -F+cRB+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "2-4 Hz" | gmt pstext -R -J -DJ21.4c/21.5 -N -F+cRB+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "4-8 Hz" | gmt pstext -R -J -DJ12.2c/21.5 -N -F+cRB+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+echo "8-16 Hz" | gmt pstext -R -J -DJ2.6c/21.5 -N -F+cRB+f14p,Helvetica-Bold,black -O -V -K >> $PS1
+
+echo "Normalized log@-10@-(Q@-sc@-@+-1@+)" | gmt pstext -R -J -DJ13.5c/-4.9 -N -F+cRB+f16p,Helvetica-Bold,black -O -V >> $PS1
+
+gmt psconvert $PS1 -A+m3c/3c/3c/3c -E600 -Tf
+
+evince $PS1

@@ -1,0 +1,4 @@
+clc;
+close all;
+
+diary temp_cmmnd

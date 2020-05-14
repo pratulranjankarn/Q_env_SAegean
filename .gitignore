@@ -15,6 +15,9 @@
 *.7z
 *.txt
 *.fig
+*.int
+*.pick
+*.hyp
 #/husn*/
 #/env*/
 #/HUSN*/
